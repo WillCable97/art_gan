@@ -1,6 +1,6 @@
 import tensorflow as tf
 import keras
-from keras.layers import Conv2D, Activation, Conv2DTranspose, Concatenate, LeakyReLU, Input
+from keras.layers import Conv2D, Activation, Conv2DTranspose, Concatenate, LeakyReLU, Input, BatchNormalization
 from keras.models import Sequential, Model
 import warnings
 with warnings.catch_warnings():
@@ -13,7 +13,8 @@ with warnings.catch_warnings():
 def DescriminatorBlock(filters:int, kernel_size:int, strides:int) -> tf.Tensor:
     ret_block =  Sequential()
     ret_block.add(Conv2D(filters=filters, kernel_size=kernel_size, strides=strides))
-    ret_block.add(InstanceNormalization(axis=-1))
+    ret_block.add(BatchNormalization(axis=-1))
+    #ret_block.add(InstanceNormalization(axis=-1))
     ret_block.add(LeakyReLU(0.2))
     return ret_block
 
@@ -34,14 +35,16 @@ def Descriminator(input_shape:tuple, kernel_size:int=3, strides:int=1) -> keras.
 def DownSampleBlock(filters:int, kernel_size:int, strides:int):
     ret_block = Sequential()
     ret_block.add(Conv2D(filters=filters, kernel_size=kernel_size, strides=strides, padding='same'))
-    ret_block.add(InstanceNormalization(axis=-1))
+    ret_block.add(BatchNormalization(axis=-1))
+    #ret_block.add(InstanceNormalization(axis=-1))
     ret_block.add(Activation('relu'))
     return ret_block
 
 def UpSampleBlock(filters:int, kernel_size:int, strides:int):
     ret_block = Sequential()
     ret_block.add(Conv2DTranspose(filters=filters, kernel_size=kernel_size, strides=strides, padding='same'))
-    ret_block.add(InstanceNormalization(axis=-1))
+    ret_block.add(BatchNormalization(axis=-1))
+    #ret_block.add(InstanceNormalization(axis=-1))
     ret_block.add(Activation('relu'))
     return ret_block
   
