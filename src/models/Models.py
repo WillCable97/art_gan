@@ -3,9 +3,9 @@ import keras
 from keras.layers import Conv2D, Activation, Conv2DTranspose, Concatenate, LeakyReLU, Input, BatchNormalization
 from keras.models import Sequential, Model
 import warnings
-with warnings.catch_warnings():
-    warnings.simplefilter("ignore")
-    from tensorflow_addons.layers import InstanceNormalization #Will need to clean up this
+#with warnings.catch_warnings():
+#    warnings.simplefilter("ignore")
+#    from tensorflow_addons.layers import InstanceNormalization #Will need to clean up this
 
 
 
