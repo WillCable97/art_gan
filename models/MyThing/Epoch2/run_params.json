@@ -1,0 +1,1 @@
+{"BatchSize": 32, "LAMBDA": 10, "ModelName": "MyThing", "ModelPath": "/home/ubuntu/art_gan/models"}
