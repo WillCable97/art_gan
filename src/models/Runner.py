@@ -74,7 +74,13 @@ class Runner:
 
     def run_model_weight_load(self):
         models_to_load = self.env_obj.directories_for_weight_load()
-        for model in self.model_collection: self.model_collection[model].load_weights(models_to_load[model])     
+        for model in self.model_collection: self.model_collection[model].load_weights(models_to_load[model])   
+
+
+    def run_epochs(self, epoch_count : int, saving=False) -> None:
+        for i in range(epoch_count): 
+            print(f"Running Epoch {i}")
+            self.run_epoch(saving) 
 
     #Handling batch and epoch runs
     def run_epoch(self, saving=False):
@@ -82,7 +88,7 @@ class Runner:
         for i in range(self.batch_count):
             print(f"Running batch: {i}")
             self.run_batch()
-            break
+            #break
         
         if not saving: return #no more action required
         
@@ -102,7 +108,7 @@ class Runner:
         for k, zipped_data_instance in enumerate(zipped_data):
             errors = self.run_step(zipped_data_instance)
             self.error_tracking.read_in_vals(errors)
-            break
+            #break
 
     def run_step(self, inputs):
         """Implementation dependant on model configuration"""

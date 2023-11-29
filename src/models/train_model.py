@@ -11,7 +11,7 @@ import EnvObj
 
 
 #File paths
-base_folder=os.path.abspath('./')
+base_folder=os.path.abspath('../../')
 raw_data_folder= os.path.join(base_folder, 'data', 'raw')
 processed_data_folder=os.path.join(base_folder, 'data', 'processed')
 records_path=os.path.join(os.path.join(processed_data_folder, 'trainA'))
@@ -48,7 +48,7 @@ model_set = {
 class hyper_params(Enum):
     BatchSize = 32 
     LAMBDA=10 
-    ModelName='MyTest'
+    ModelName='MyThing'
     ModelPath=path_to_models
 
 
@@ -58,7 +58,11 @@ pipline_proc = GanImageProcessor()
 #A = Runner.Runner(main_container, model_set, hyper_params, pipline_proc)
 
 A = GanRunner.CycleGanRunner(main_container, hyper_params, pipline_proc, model_set)
-A.run_epoch(True)
+
+
+
+
+A.run_epochs(10, True)
 
 
 """

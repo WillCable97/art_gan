@@ -2,7 +2,7 @@
 import click
 import logging
 from pathlib import Path
-from dotenv import find_dotenv, load_dotenv
+#from dotenv import find_dotenv, load_dotenv
 import os
 import tensorflow as tf
 import numpy as np 
@@ -74,6 +74,9 @@ def save_tf_records(image_file_path : str, tf_record_base_path : str, file_name 
         'text_feature': image_file_path,  # Modify with your string data
     }
 
+    if not os.path.exists(tf_record_base_path): os.makedirs(tf_record_base_path)
+
+    
     # Specify the path to save the TFRecord
     tfrecord_file = os.path.join(tf_record_base_path, file_name + '.tfrecord')
 
@@ -94,7 +97,7 @@ if __name__ == '__main__':
 
     # find .env automagically by walking up directories until it's found, then
     # load up the .env entries as environment variables
-    load_dotenv(find_dotenv())
+    #load_dotenv(find_dotenv())
 
     main()
 
