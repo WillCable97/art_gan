@@ -22,7 +22,7 @@ class TrainingEnvironmentObject:
 
     def directories_for_weight_load(self, epoch_num):
         models_location = self._path_to_epoch(epoch_num)
-        return {model: self._path_to_model_in_epoch(model) for model in os.listdir(models_location)}
+        return {model: self._path_to_model_in_epoch(epoch_num, model) for model in os.listdir(models_location)}
 
     #Environment init
     def _check_project_existence(self):
@@ -86,6 +86,9 @@ class TrainingEnvironmentObject:
     
     def _path_to_params_in_epoch(self, epoch_number:int):
         return os.path.join(self._path_to_epoch(epoch_number), "run_params.json")
+    
+    def _path_to_error_object(self, epoch_number:int):
+        return os.path.join(self._path_to_epoch(epoch_number), "error_metrics.json")
 
 
 

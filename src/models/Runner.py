@@ -37,8 +37,8 @@ class Runner:
 
         #Environment
         self.env_obj = EnvObj.TrainingEnvironmentObject(self.model_base_path, self.model_name)
-        self._handle_model_init()
         self.epoch_number = self.env_obj._get_epoch_number()
+        self._handle_model_init()
         self.model_path = self.env_obj.project_path
 
         #Other
@@ -55,6 +55,7 @@ class Runner:
         models_init = self.env_obj.models_init
 
         if models_init: 
+            self.run_model_weight_load(self.epoch_number)
             pass
             #Load the models
             #models_to_load = self.env_obj.model_directories_for_load()
@@ -72,9 +73,14 @@ class Runner:
             self.model_collection[model].save_weights(models_to_save[model])
         self.env_obj._create_param_json(self.model_hyperparams, self.epoch_number)
 
-    def run_model_weight_load(self):
-        models_to_load = self.env_obj.directories_for_weight_load()
-        for model in self.model_collection: self.model_collection[model].load_weights(models_to_load[model])   
+    def save_error_object(self):
+        self.error_tracking.save_json_obj(self.env_obj._path_to_error_object(self.epoch_number))
+
+    def run_model_weight_load(self, epoch):
+        models_to_load = self.env_obj.directories_for_weight_load(epoch)
+        for model in self.model_collection: 
+            self.model_collection[model].load_weights(models_to_load[model])
+            #print(f"weight for {model} found at {models_to_load[model]}")   
 
 
     def run_epochs(self, epoch_count : int, saving=False) -> None:
@@ -93,6 +99,7 @@ class Runner:
         if not saving: return #no more action required
         
         self.run_model_weight_saves()
+        self.save_error_object()
         self.env_obj._increment_epoch()
 
     def run_batch(self): #Need to clean up this
@@ -107,8 +114,9 @@ class Runner:
 
         for k, zipped_data_instance in enumerate(zipped_data):
             errors = self.run_step(zipped_data_instance)
+            print(errors)
             self.error_tracking.read_in_vals(errors)
-            #break
+            break
 
     def run_step(self, inputs):
         """Implementation dependant on model configuration"""

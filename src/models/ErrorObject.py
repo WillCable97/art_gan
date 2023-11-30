@@ -15,7 +15,7 @@ class ErrorHandler:
     def create_json_obj(self):
         """Returns json object for all errors added to the run output list"""
         for k, model_name in enumerate(self.model_name_schema):
-            self.json_obj[model_name] = [str(i[k]) for i in self.run_output]
+            self.json_obj[model_name] = [str(i[k]) for i in self.run_output] #Float not json serializable
         return self.json_obj
     
     def save_json_obj(self, file_path):

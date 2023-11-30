@@ -11,16 +11,12 @@ import EnvObj
 
 
 #File paths
-base_folder=os.path.abspath('../../')
+base_folder=os.path.abspath('./')
 raw_data_folder= os.path.join(base_folder, 'data', 'raw')
 processed_data_folder=os.path.join(base_folder, 'data', 'processed')
 records_path=os.path.join(os.path.join(processed_data_folder, 'trainA'))
 records_path2=os.path.join(os.path.join(processed_data_folder, 'trainB'))
 path_to_models=os.path.join(base_folder, 'models')
-
-
-
-
 
 
 #Feature map
@@ -58,21 +54,16 @@ pipline_proc = GanImageProcessor()
 #A = Runner.Runner(main_container, model_set, hyper_params, pipline_proc)
 
 A = GanRunner.CycleGanRunner(main_container, hyper_params, pipline_proc, model_set)
+#A.run_epochs(10, True)
+A.run_epoch(True)
 
 
-
-
-A.run_epochs(10, True)
-
-
-"""
-model_path = os.path.join(path_to_models, 'Image Gan V2')
-B = Evaluator.Evaluator(model_path)
-B.add_runner(GanRunner.CycleGanRunner(main_container, model_set, hyper_params, pipline_proc))
-B.visualise_outputs('b_a_generator')
+#model_path = os.path.join(path_to_models, 'MyThing')
+#B = Evaluator.Evaluator(path_to_models, 'MyThing')
+#B.add_runner(GanRunner.CycleGanRunner(main_container, hyper_params, pipline_proc, model_set))
+#B.visualise_outputs('b_a_generator')
 #B.graph_error_models()
 
-"""
 
 
 
