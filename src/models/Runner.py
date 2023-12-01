@@ -94,7 +94,7 @@ class Runner:
         for i in range(self.batch_count):
             print(f"Running batch: {i}")
             self.run_batch()
-            #break
+            break
         
         if not saving: return #no more action required
         
@@ -114,7 +114,7 @@ class Runner:
 
         for k, zipped_data_instance in enumerate(zipped_data):
             errors = self.run_step(zipped_data_instance)
-            print(errors)
+            #print(errors)
             self.error_tracking.read_in_vals(errors)
             break
 
