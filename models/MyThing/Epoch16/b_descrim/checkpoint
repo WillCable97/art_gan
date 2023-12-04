@@ -1,0 +1,2 @@
+model_checkpoint_path: "b_descrim"
+all_model_checkpoint_paths: "b_descrim"
