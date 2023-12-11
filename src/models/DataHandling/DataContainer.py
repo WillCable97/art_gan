@@ -25,7 +25,11 @@ class TensorflowDataObject:
     
     def return_single_eg(self): #Should be cleaned
         """Returns one sings example (the first one) from the data set"""
+        count =0 
+
         for record in self.parsed_dataset:
+            count +=1 
+            if count < 10 : continue #10
             text_feature = record[self.data_col_name].numpy().decode('utf-8')
             return text_feature
 

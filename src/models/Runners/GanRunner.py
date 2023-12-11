@@ -1,4 +1,4 @@
-from Runner import Runner
+from Runners.Runner import Runner
 import tensorflow as tf
 
 """GAN instance of runner class, implements its own run_step method"""

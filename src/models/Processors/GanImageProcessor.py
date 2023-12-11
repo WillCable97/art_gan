@@ -1,5 +1,5 @@
 import tensorflow as tf
-from Processors import Processor
+from Processors.Processor import Processor
 
 """Instance of the processor class, resizes and normalises images for input, and recreates jpeg formatting for output"""
 

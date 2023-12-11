@@ -67,9 +67,17 @@ class Evaluator:
         
         output_list = list(map(self.runner_obj.pipline_processor.postprocess_function, list_of_outputs))
 
-        fig, axs = plt.subplots(1, len(epoch_list)+1, figsize=(10, 8))
+        #fig, axs = plt.subplots(1, len(epoch_list)+1, figsize=(10, 8))
+
+        fig, axs = plt.subplots(1, 2)
+        axs[0].imshow(output_list[0])
+        axs[1].imshow(output_list[-1])
+
+
 
         for k, image in enumerate(output_list):
-            axs[k].imshow(image)
+            plt.imsave(str(k) + '.jpg',image)
+            #if not k % 2 ==0 : continue 
+            #axs[k].imshow(image)
 
         plt.show()

@@ -20,6 +20,29 @@ endif
 # COMMANDS                                                                      #
 #################################################################################
 
+#####################MODELS#####################
+## Run Training Step
+Template:
+	$(PYTHON_INTERPRETER) src/models/train_model_template.py
+
+GanV1:
+	$(PYTHON_INTERPRETER) src/models/train_gan_v1.py
+
+GanV2:
+	$(PYTHON_INTERPRETER) src/models/train_gan_v2.py	
+
+#train: #requirements
+#	$(PYTHON_INTERPRETER) src/models/train_model.py
+
+
+
+
+#testthing: 
+#	$(PYTHON_INTERPRETER) src/models/Template/Processor.py
+
+
+
+
 ## Install Python Dependencies
 requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
@@ -29,9 +52,7 @@ requirements: test_environment
 data: #requirements
 	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
 
-## Run Training Step
-train: #requirements
-	$(PYTHON_INTERPRETER) src/models/train_model.py
+
 
 ## Delete all compiled Python files
 clean:

@@ -1,10 +1,9 @@
-from DataContainer import TensorflowDataObject
-import Models
-import Processors
-import EnvObj
+from DataHandling.DataContainer import TensorflowDataObject
+from Processors.Processor import Processor
+from Environement.EnvObj import TrainingEnvironmentObject
 
 import typing
-import ErrorObject
+import Errors.ErrorObject
 from enum import Enum
 import os
 import math
@@ -20,7 +19,7 @@ class Runner:
     def __init__(self
                  , data_input : typing.Dict[str, typing.Dict[str, TensorflowDataObject]] #Names of datasets (domains)
                  , model_hyperparams : Enum #Random collection of parameters
-                 , pipline_processor : Processors.Processor #Processor (input / ouptut cleaning)
+                 , pipline_processor : Processor #Processor (input / ouptut cleaning)
                  , model_collection : typing.Dict[str, Model] = None #Names of models
                  ):
         #Function Inputs
@@ -36,14 +35,14 @@ class Runner:
         self.model_base_path = self.model_hyperparams.ModelPath.value
 
         #Environment
-        self.env_obj = EnvObj.TrainingEnvironmentObject(self.model_base_path, self.model_name)
+        self.env_obj = TrainingEnvironmentObject(self.model_base_path, self.model_name)
         self.epoch_number = self.env_obj._get_epoch_number()
         self._handle_model_init()
         self.model_path = self.env_obj.project_path
 
         #Other
         self.batch_count = self._get_batch_count()
-        self.error_tracking = ErrorObject.ErrorHandler([key for key in self.model_collection])
+        self.error_tracking = Errors.ErrorObject.ErrorHandler([key for key in self.model_collection])
         self.input_optimizers = {key_val: Adam(learning_rate=0.0002, beta_1=0.5) for key_val in self.model_collection}
         self.entropy_loss = BinaryCrossentropy(from_logits=True) 
 
@@ -79,9 +78,8 @@ class Runner:
     def run_model_weight_load(self, epoch):
         models_to_load = self.env_obj.directories_for_weight_load(epoch)
         for model in self.model_collection: 
-            self.model_collection[model].load_weights(models_to_load[model])
-            #print(f"weight for {model} found at {models_to_load[model]}")   
-
+            self.model_collection[model].load_weights(models_to_load[model]) 
+        print(f"Loaded weights from epoch {epoch}")
 
     def run_epochs(self, epoch_count : int, saving=False) -> None:
         for i in range(epoch_count): 

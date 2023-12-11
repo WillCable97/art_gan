@@ -44,7 +44,7 @@ model_set = {
 class hyper_params(Enum):
     BatchSize = 32 
     LAMBDA=10 
-    ModelName='MyThing'
+    ModelName='GanV1'
     ModelPath=path_to_models
 
 
@@ -53,15 +53,15 @@ pipline_proc = GanImageProcessor()
 
 #A = Runner.Runner(main_container, model_set, hyper_params, pipline_proc)
 
-A = GanRunner.CycleGanRunner(main_container, hyper_params, pipline_proc, model_set)
+#A = GanRunner.CycleGanRunner(main_container, hyper_params, pipline_proc, model_set)
 #A.run_epochs(10, True)
-A.run_epoch(True)
+#A.run_epoch(True)
 
 
-#model_path = os.path.join(path_to_models, 'MyThing')
-#B = Evaluator.Evaluator(path_to_models, 'MyThing')
-#B.add_runner(GanRunner.CycleGanRunner(main_container, hyper_params, pipline_proc, model_set))
-#B.visualise_outputs('b_a_generator')
+model_path = os.path.join(path_to_models, 'GanV1')
+B = Evaluator.Evaluator(path_to_models, 'GanV1')
+B.add_runner(GanRunner.CycleGanRunner(main_container, hyper_params, pipline_proc, model_set))
+B.visualise_outputs('b_a_generator')
 #B.graph_error_models()
 
 
